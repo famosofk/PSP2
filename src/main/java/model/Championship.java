@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,14 +23,13 @@ public class Championship {
         for (int i = 0; i < teamsNumber; i++) {
             teamList.add(new Team(i + 1));
         }
-        System.out.println("value");
     }
 
     public Team getTeam(int teamNumber) throws IllegalAccessException {
         if (teamNumber > totalTeams || teamNumber <= 0) {
             throw new IllegalAccessException("There's no team with this number");
         }
-        return teamList.get(teamNumber);
+        return teamList.get(teamNumber - 1);
     }
 
     public int getTotalMatches() {
@@ -86,30 +86,27 @@ public class Championship {
 
 
     public List<Team> getFinalScoreBoard() {
-        return teamList.stream().sorted((o1, o2) -> {
+        List<Team> list = teamList.stream().sorted((o1, o2) -> {
             int result = 0;
             for (int i = 0; i < 4; i++) {
                 if (result != 0) return result;
                 switch (i) {
-                    //Estamos usando o comparable do Integer e Double pra não ter que escrever o nosso.
-                    //Como queremos a lista ao contrário, vamos multiplicar o resultado por -1.
-                    //Mais eficiente que dar um Collections.reverse()
                     case 0:
-                        result = Integer.compare(o1.getScore(), o2.getScore()) * -1;
+                        result = Integer.compare(o1.getScore(), o2.getScore());
                         break;
                     case 1:
-                        result = Double.compare(o1.getAverageScore(), o2.getAverageScore()) * -1;
+                        result = Double.compare(o1.getAverageScore(), o2.getAverageScore());
                         break;
                     case 2:
-                        result = Integer.compare(o1.getMadePoints(), o2.getMadePoints()) * -1;
+                        result = Integer.compare(o1.getMadePoints(), o2.getMadePoints());
                         break;
                     case 3:
-                        result = Integer.compare(o1.getNumber(), o2.getNumber()) * -1;
+                        result = Integer.compare(o1.getNumber(), o2.getNumber());
                 }
             }
             return 0;
         }).collect(Collectors.toList());
+        Collections.reverse(list);
+        return list;
     }
-
-
 }
