@@ -9,12 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class TeamTest {
 
     private Championship c;
-    private final int winningTeam = 1;
     private final int winnerScore = 102;
     private final int losingTeam = 2;
     private final int loserScore = 62;
-    private final String match = String.format("%d %d %d %d", winningTeam, winnerScore, losingTeam, loserScore);
-
 
     @BeforeEach
     void setup() {
@@ -23,7 +20,7 @@ class TeamTest {
 
     @Test
     void testAddScoredPointsToTeam() {
-        c.processMatch(match);
+        c.processMatch(102, 62, 1, 2);
         assertDoesNotThrow(() -> {
             Team loser = c.getTeam(losingTeam);
             assertThat(loser.getMadePoints()).isEqualTo(loserScore);
@@ -32,7 +29,7 @@ class TeamTest {
 
     @Test
     void testAddSufferedPointsToTeam() {
-        c.processMatch(match);
+        c.processMatch(102, 62, 1, 2);
         assertDoesNotThrow(() -> {
             Team loser = c.getTeam(losingTeam);
             assertThat(loser.getSufferedPoints()).isEqualTo(winnerScore);

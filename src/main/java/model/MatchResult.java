@@ -5,6 +5,9 @@ public enum MatchResult {
 
     public int value;
 
+    /**
+     * Complexidade: 1. Construtor do enum é sequêncial.
+     **/
     MatchResult(int value) {
         this.value = value;
     }

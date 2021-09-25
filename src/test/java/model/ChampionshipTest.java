@@ -38,7 +38,7 @@ class ChampionshipTest {
     @Test
     void testProcessMatchForWinner() {
         c = new Championship(5);
-        c.processMatch("1 102 2 62");
+        c.processMatch(102, 62, 1, 2);
         assertDoesNotThrow(() -> {
             Team winner = c.getTeam(1);
             assertThat(winner.getScore()).isEqualTo(MatchResult.WIN.value);
@@ -50,7 +50,7 @@ class ChampionshipTest {
     @Test
     void testProcessMatchForLoser() {
         c = new Championship(5);
-        c.processMatch("1 102 2 62");
+        c.processMatch(102, 62, 1, 2);
         assertDoesNotThrow(() -> {
             Team loser = c.getTeam(2);
             assertThat(loser.getScore()).isEqualTo(MatchResult.LOSE.value);
@@ -62,16 +62,16 @@ class ChampionshipTest {
     @Test
     void getFinalScoreBoard() {
         c = new Championship(5);
-        c.processMatch("1 102 2 62");
-        c.processMatch("1 128 3 127");
-        c.processMatch("1 144 4 80");
-        c.processMatch("1 102 5 101");
-        c.processMatch("2 62 3 61");
-        c.processMatch("2 100 4 80");
-        c.processMatch("2 88 5 82");
-        c.processMatch("3 79 4 90");
-        c.processMatch("3 87 5 100");
-        c.processMatch("4 110 5 99");
+        c.processMatch(102, 62, 1, 2);
+        c.processMatch(128, 127, 1, 3);
+        c.processMatch(144, 80, 1, 4);
+        c.processMatch(102, 101, 1, 5);
+        c.processMatch(62, 61, 2, 3);
+        c.processMatch(100, 80, 2, 4);
+        c.processMatch(88, 82, 2, 5);
+        c.processMatch(79, 90, 3, 4);
+        c.processMatch(87, 100, 3, 5);
+        c.processMatch(110, 99, 4, 5);
         assertThat(c.getResult()).isEqualTo("1 2 4 5 3");
     }
 }

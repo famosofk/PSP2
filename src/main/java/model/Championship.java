@@ -14,6 +14,12 @@ public class Championship {
         return totalTeams;
     }
 
+
+    /**
+     * Complexidade: 3.
+     * Apresenta um if para não criar campeonato com 1 único time. +1
+     * Apresenta um for para a criação dos times na entidade campeonato.
+     **/
     public Championship(int teamsNumber) throws IllegalArgumentException {
         if (teamsNumber < 2) {
             throw new IllegalArgumentException("Invalid number of teams");
@@ -25,6 +31,12 @@ public class Championship {
         }
     }
 
+
+    /**
+     * Complexidade: 3.
+     * Como esse é um método get, para prevenir acesso inválido a nossa lista, temos um if que verifica o valor passado.
+     * por esse if conter um condicional ou temos +2.
+     **/
     public Team getTeam(int teamNumber) throws IllegalAccessException {
         if (teamNumber > totalTeams || teamNumber <= 0) {
             throw new IllegalAccessException("There's no team with this number");
@@ -32,17 +44,19 @@ public class Championship {
         return teamList.get(teamNumber - 1);
     }
 
+    /**
+     * Complexidade: 1. Código sequencial.
+     **/
     public int getTotalMatches() {
         return totalTeams * (totalTeams - 1) / 2;
     }
 
-    public void processMatch(String line) {
-        String[] data = line.trim().split(" ");
+
+    /**
+     * Complexidade: 2. O código apresenta um condicional para definir o time vencedor.
+     **/
+    public void processMatch(int firstTeamScore, int secondTeamScore, int firstTeamNumber, int secondTeamNumber) {
         int winner, loser, winnerPoints, loserPoints;
-        int firstTeamScore = Integer.parseInt(data[1]);
-        int secondTeamScore = Integer.parseInt(data[3]);
-        int firstTeamNumber = Integer.parseInt(data[0]);
-        int secondTeamNumber = Integer.parseInt(data[2]);
 
         if (firstTeamScore > secondTeamScore) {
             winner = firstTeamNumber;
@@ -60,14 +74,23 @@ public class Championship {
         updateLoser(loser, loserPoints, winnerPoints);
     }
 
+    /**
+     * Complexidade: 1. Essa função é desnecessária, porém já vi muita gente burra, então prefiro colocar.
+     **/
     private void updateWinner(int teamNumber, int scoredPoints, int sufferedPoints) {
         updateTeam(teamNumber, scoredPoints, sufferedPoints, MatchResult.WIN);
     }
 
+    /**
+     * Complexidade: 1. Essa função é desnecessária, porém já vi muita gente burra, então prefiro colocar.
+     **/
     private void updateLoser(int teamNumber, int scoredPoints, int sufferedPoints) {
         updateTeam(teamNumber, scoredPoints, sufferedPoints, MatchResult.LOSE);
     }
 
+    /**
+     * Complexidade: 1. Código sequencial
+     **/
     private void updateTeam(int teamNumber, int scoredPoints, int sufferedPoints, MatchResult result) {
         Team team = teamList.get(teamNumber - 1);
         team.addMadePoints(scoredPoints);
@@ -76,6 +99,10 @@ public class Championship {
         teamList.set(teamNumber - 1, team);
     }
 
+
+    /**
+     * Complexidade: 2. Temos um for que adiciona um ao valor. Apenas formato o resultado.
+     **/
     public String getResult() {
         StringBuilder result = new StringBuilder();
         for (Team t : getFinalScoreBoard()) {
@@ -84,7 +111,15 @@ public class Championship {
         return result.toString().trim();
     }
 
-
+    /**
+     * Complexidade: 8. (1 inicial +1 +1 +1 +4)
+     * Aqui temos uma função de ordenação implementada em função dos critérios do campeonato.
+     * O for que percorre os critérios de desempate. +1 ponto.
+     * O if verifica se já está ordenado. +1.
+     * Como temos 2 returns no algoritmo. +1.
+     * Temos 4 critérios de ordenação. +4.
+     * O switch foi utilizado para em caso de empate, definirmos qual critério estamos utilizando.
+     **/
     public List<Team> getFinalScoreBoard() {
         List<Team> list = teamList.stream().sorted((o1, o2) -> {
             int result = 0;
