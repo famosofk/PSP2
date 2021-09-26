@@ -112,12 +112,12 @@ public class Championship {
     }
 
     /**
-     * Complexidade: 8. (1 inicial +1 +1 +1 +4)
+     * Complexidade: 7. (1 inicial +1 +1 +1 +3)
      * Aqui temos uma função de ordenação implementada em função dos critérios do campeonato.
      * O for que percorre os critérios de desempate. +1 ponto.
      * O if verifica se já está ordenado. +1.
      * Como temos 2 returns no algoritmo. +1.
-     * Temos 4 critérios de ordenação. +4.
+     * Temos 4 critérios de ordenação, porém apenas 3 cases. +3.
      * O switch foi utilizado para em caso de empate, definirmos qual critério estamos utilizando.
      **/
     public List<Team> getFinalScoreBoard() {
@@ -135,7 +135,7 @@ public class Championship {
                     case 2:
                         result = Integer.compare(o1.getMadePoints(), o2.getMadePoints());
                         break;
-                    case 3:
+                    default:
                         result = Integer.compare(o1.getNumber(), o2.getNumber());
                 }
             }
