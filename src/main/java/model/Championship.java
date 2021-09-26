@@ -14,7 +14,6 @@ public class Championship {
         return totalTeams;
     }
 
-
     /**
      * Complexidade: 3.
      * Apresenta um if para não criar campeonato com 1 único time. +1
@@ -30,7 +29,6 @@ public class Championship {
             teamList.add(new Team(i + 1));
         }
     }
-
 
     /**
      * Complexidade: 3.
@@ -51,13 +49,11 @@ public class Championship {
         return totalTeams * (totalTeams - 1) / 2;
     }
 
-
     /**
      * Complexidade: 2. O código apresenta um condicional para definir o time vencedor.
      **/
     public void processMatch(int firstTeamScore, int secondTeamScore, int firstTeamNumber, int secondTeamNumber) {
         int winner, loser, winnerPoints, loserPoints;
-
         if (firstTeamScore > secondTeamScore) {
             winner = firstTeamNumber;
             winnerPoints = firstTeamScore;
@@ -69,7 +65,6 @@ public class Championship {
             loser = firstTeamNumber;
             loserPoints = firstTeamScore;
         }
-
         updateWinner(winner, winnerPoints, loserPoints);
         updateLoser(loser, loserPoints, winnerPoints);
     }
@@ -99,7 +94,6 @@ public class Championship {
         teamList.set(teamNumber - 1, team);
     }
 
-
     /**
      * Complexidade: 2. Temos um for que adiciona um ao valor. Apenas formato o resultado.
      **/
@@ -112,35 +106,38 @@ public class Championship {
     }
 
     /**
-     * Complexidade: 8. (1 inicial +1 +1 +1 +4)
+     * Complexidade: 7. (1 inicial +1 +1 +1 +3)
      * Aqui temos uma função de ordenação implementada em função dos critérios do campeonato.
      * O for que percorre os critérios de desempate. +1 ponto.
      * O if verifica se já está ordenado. +1.
      * Como temos 2 returns no algoritmo. +1.
-     * Temos 4 critérios de ordenação. +4.
+     * Temos 4 critérios de ordenação, porém apenas 3 cases. +3.
      * O switch foi utilizado para em caso de empate, definirmos qual critério estamos utilizando.
      **/
     public List<Team> getFinalScoreBoard() {
-        List<Team> list = teamList.stream().sorted((o1, o2) -> {
-            int result = 0;
-            for (int i = 0; i < 4; i++) {
-                if (result != 0) return result;
-                switch (i) {
-                    case 0:
-                        result = Integer.compare(o1.getScore(), o2.getScore());
-                        break;
-                    case 1:
-                        result = Double.compare(o1.getAverageScore(), o2.getAverageScore());
-                        break;
-                    case 2:
-                        result = Integer.compare(o1.getMadePoints(), o2.getMadePoints());
-                        break;
-                    case 3:
-                        result = Integer.compare(o1.getNumber(), o2.getNumber());
-                }
-            }
-            return 0;
-        }).collect(Collectors.toList());
+        List<Team> list = teamList.stream()
+                .sorted((o1, o2) -> {
+                    int result = 0;
+                    for (int i = 0; i < 4; i++) {
+                        if (result != 0) {
+                            return result;
+                        }
+                        switch (i) {
+                            case 0:
+                                result = Integer.compare(o1.getScore(), o2.getScore());
+                                break;
+                            case 1:
+                                result = Double.compare(o1.getAverageScore(), o2.getAverageScore());
+                                break;
+                            case 2:
+                                result = Integer.compare(o1.getMadePoints(), o2.getMadePoints());
+                                break;
+                            default:
+                                result = Integer.compare(o1.getNumber(), o2.getNumber());
+                        }
+                    }
+                    return 0;
+                }).collect(Collectors.toList());
         Collections.reverse(list);
         return list;
     }

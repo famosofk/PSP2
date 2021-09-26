@@ -1,12 +1,12 @@
 package model;
 
 public class Team {
-    private int number;
+
+    private final int number;
     private int score = 0;
     private int madePoints = 0;
     private int sufferedPoints = 0;
     private double averagePoints = 0.0;
-
 
     /**
      * Complexidade: 1. Método sequencial
@@ -15,14 +15,12 @@ public class Team {
         this.number = number;
     }
 
-
     /**
      * Complexidade: 1. Método sequencial
      **/
     public int getNumber() {
         return number;
     }
-
 
     /**
      * Complexidade: 2.
@@ -35,14 +33,12 @@ public class Team {
         return averagePoints;
     }
 
-
     /**
      * Complexidade: 1. Método sequencial
      **/
     public int getScore() {
         return score;
     }
-
 
     /**
      * Complexidade: 1. Método sequencial

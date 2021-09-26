@@ -4,16 +4,16 @@ import java.io.*;
 
 public class Main {
 
-    static FileInputStream is;
-    static DataInputStream data;
-    static BufferedReader reader;
-    private static Championship c;
-
     /*
       Todos os métodos começam com complexidade valendo 1.
-      Para cada fluxo, condicional (exceção else e default) e operador lógico adicionaremos 1.
-      Métodos sort não serão considerados, pois eles não geram um fluxo.
+      Para cada fluxo, condicional (exceção, else e default) e operador lógico adicionaremos 1.
+      Métodos sort não serão considerados, pois, eles não geram um fluxo.
       **/
+
+    private static FileInputStream is;
+    private static DataInputStream data;
+    private static BufferedReader reader;
+    private static Championship c;
 
     /**
      * Devido a presença do catch, temos uma complexidade ciclomática de 2.
